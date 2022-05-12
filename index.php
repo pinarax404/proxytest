@@ -47,8 +47,6 @@
             die();
     }
     fclose($prxtype);
-
-}
     
 function pinarax_start($ptype, $proxy) {
     $exex_http      = pinarax_curl_attr($ptype, $proxy, 'http://ip-api.com/json/');
