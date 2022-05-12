@@ -1,12 +1,5 @@
 <?php
 
-$mode = $_GET['mode'];
-$ipprox = $_GET['proxy'];
-
-if($mode !== '' && $ipprox !== '') {
-    pinarax_start($mode, $ipprox);
-} else {
-
     echo '1. HTTP' . PHP_EOL . '2. HTTPS' . PHP_EOL . '3. SOCKS4' . PHP_EOL . '4. SOCKS5' . PHP_EOL;
     $prxtype = fopen('php://stdin', 'rb');
     $prxtypeline   = fgets($prxtype);
@@ -93,7 +86,6 @@ function pinarax_start($ptype, $proxy) {
     } else {
         echo "\033[1;37mIG api : \033[1;33m✘\033[1;37m\n";
     }
-}
 
 function pinarax_curl_attr($ptype, $proxy, $url) {
     $ch = curl_init();
