@@ -84,6 +84,7 @@ function pinarax_start($ptype, $proxy) {
     } else {
         echo "\033[1;37mIG api : \033[1;33m✘\033[1;37m\n";
     }
+}
 
 function pinarax_curl_attr($ptype, $proxy, $url) {
     $ch = curl_init();
