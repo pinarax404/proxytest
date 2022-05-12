@@ -8,7 +8,7 @@ if(trim($prxtypeline) == '1') {
         $handle = fopen('php://stdin', 'rb');
         $line   = fgets($handle);
         if(trim($line) !== null) {
-                pinarax_curl_attr('1', trim($line));
+                pinarax_start('1', trim($line));
         } else {
                 die();
         }
@@ -18,7 +18,7 @@ if(trim($prxtypeline) == '1') {
         $handle = fopen('php://stdin', 'rb');
         $line   = fgets($handle);
         if(trim($line) !== null) {
-                pinarax_curl_attr('2', trim($line));
+                pinarax_start('2', trim($line));
         } else {
                 die();
         }
@@ -28,7 +28,7 @@ if(trim($prxtypeline) == '1') {
         $handle = fopen('php://stdin', 'rb');
         $line   = fgets($handle);
         if(trim($line) !== null) {
-                pinarax_curl_attr('3', trim($line));
+                pinarax_start('3', trim($line));
         } else {
                 die();
         }
@@ -38,7 +38,7 @@ if(trim($prxtypeline) == '1') {
         $handle = fopen('php://stdin', 'rb');
         $line   = fgets($handle);
         if(trim($line) !== null) {
-                pinarax_curl_attr('4', trim($line));
+                pinarax_start('4', trim($line));
         } else {
                 die();
         }
@@ -48,7 +48,40 @@ if(trim($prxtypeline) == '1') {
 }
 fclose($prxtype);
 
-function pinarax_curl_attr($ptype, $proxy) {
+function pinarax_start($ptype, $proxy) {
+    $exex_http = pinarax_curl_attr($ptype, $proxy, 'http://ip-api.com/json/');
+    if($exex_http !== false  && strpos($exex_http, 'query') !== false) {
+        echo "\033[1;37mHTTP : \033[1;32m✔\033[1;37m\n";
+        $exex_https = pinarax_curl_attr($ptype, $proxy, 'https://ipwhois.app/json/');
+        if($exex_https !== false  && strpos($exex_https, 'ip') !== false) {
+            echo "\033[1;37mHTTPS : \033[1;32m✔\033[1;37m\n";
+            $exex_rand = pinarax_curl_attr($ptype, $proxy, 'https://randomuser.me/api/?gender=female&nat=us');
+            if($exex_rand !== false  && strpos($exex_rand, 'results') !== false) {
+                echo "\033[1;37mRandomuser : \033[1;32m✔\033[1;37m\n";
+                $exex_ig_mid = pinarax_curl_attr($ptype, $proxy, 'https://www.instagram.com/data/shared_data/');
+                if($exex_ig_mid !== false  && strpos($exex_ig_mid, 'csrf_token') !== false) {
+                    echo "\033[1;37mIG mid : \033[1;32m✔\033[1;37m\n";
+                    $exex_ig_api = pinarax_curl_attr($ptype, $proxy, 'https://i.instagram.com/data/manifest.json');
+                    if($exex_ig_api !== false  && strpos($exex_ig_api, 'Instagram') !== false) {
+                        echo "\033[1;37mIG api : \033[1;32m✔\033[1;37m\n";
+                    } else {
+                        echo "\033[1;37mIG api : \033[1;33m✘\033[1;37m\n";
+                    }
+                } else {
+                    echo "\033[1;37mIG mid : \033[1;33m✘\033[1;37m\n";
+                }
+            } else {
+                echo "\033[1;37mRandomuser : \033[1;33m✘\033[1;37m\n";
+            }
+        } else {
+            echo "\033[1;37mHTTPS : \033[1;33m✘\033[1;37m\n";
+        }
+    } else {
+        echo "\033[1;37mHTTP : \033[1;33m✘\033[1;37m\n";
+    }
+}
+
+function pinarax_curl_attr($ptype, $proxy, $url) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, 'https://ipwhois.app/json/');
     curl_setopt($ch, CURLOPT_HEADER, false);
@@ -72,11 +105,8 @@ function pinarax_curl_attr($ptype, $proxy) {
     curl_close($ch);
 
     if($respons_http_code == 200) {
-        $res_get_ip                 = json_decode($respons_data, true);
-        echo "\033[1;37mIP : " . $res_get_ip['ip'] . " | Country : " . $res_get_ip['country'] . "\033[1;37m\n";
-        pinarax_curl_attr($ptype, $proxy);
+        return $respons_data;
     } else {
-        echo "\033[1;37mIP : null | Country : null\033[1;37m\n";
-        pinarax_curl_attr($ptype, $proxy);
+        return false;
     }
 }
