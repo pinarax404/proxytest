@@ -1,53 +1,62 @@
 <?php
 
-echo '1. HTTP' . PHP_EOL . '2. HTTPS' . PHP_EOL . '3. SOCKS4' . PHP_EOL . '4. SOCKS5' . PHP_EOL;
-$prxtype = fopen('php://stdin', 'rb');
-$prxtypeline   = fgets($prxtype);
-if(trim($prxtypeline) == '1') {
-        echo 'masukkan host:port' . PHP_EOL;
-        $handle = fopen('php://stdin', 'rb');
-        $line   = fgets($handle);
-        if(trim($line) !== null) {
-                pinarax_start('1', trim($line));
-        } else {
-                die();
-        }
-        fclose($handle);
-} else if(trim($prxtypeline) == '2') {
-        echo 'masukkan host:port' . PHP_EOL;
-        $handle = fopen('php://stdin', 'rb');
-        $line   = fgets($handle);
-        if(trim($line) !== null) {
-                pinarax_start('2', trim($line));
-        } else {
-                die();
-        }
-        fclose($handle);
-} else if(trim($prxtypeline) == '3') {
-        echo 'masukkan host:port' . PHP_EOL;
-        $handle = fopen('php://stdin', 'rb');
-        $line   = fgets($handle);
-        if(trim($line) !== null) {
-                pinarax_start('3', trim($line));
-        } else {
-                die();
-        }
-        fclose($handle);
-} else if(trim($prxtypeline) == '4') {
-        echo 'masukkan host:port' . PHP_EOL;
-        $handle = fopen('php://stdin', 'rb');
-        $line   = fgets($handle);
-        if(trim($line) !== null) {
-                pinarax_start('4', trim($line));
-        } else {
-                die();
-        }
-        fclose($handle);
-} else {
-        die();
-}
-fclose($prxtype);
+$mode = $_GET['mode'];
+$ipprox = $_GET['proxy'];
 
+if($mode !== '' && $ipprox !== '') {
+    pinarax_start($mode, $ipprox);
+} else {
+
+    echo '1. HTTP' . PHP_EOL . '2. HTTPS' . PHP_EOL . '3. SOCKS4' . PHP_EOL . '4. SOCKS5' . PHP_EOL;
+    $prxtype = fopen('php://stdin', 'rb');
+    $prxtypeline   = fgets($prxtype);
+    if(trim($prxtypeline) == '1') {
+            echo 'masukkan host:port' . PHP_EOL;
+            $handle = fopen('php://stdin', 'rb');
+            $line   = fgets($handle);
+            if(trim($line) !== null) {
+                    pinarax_start('1', trim($line));
+            } else {
+                    die();
+            }
+            fclose($handle);
+    } else if(trim($prxtypeline) == '2') {
+            echo 'masukkan host:port' . PHP_EOL;
+            $handle = fopen('php://stdin', 'rb');
+            $line   = fgets($handle);
+            if(trim($line) !== null) {
+                    pinarax_start('2', trim($line));
+            } else {
+                    die();
+            }
+            fclose($handle);
+    } else if(trim($prxtypeline) == '3') {
+            echo 'masukkan host:port' . PHP_EOL;
+            $handle = fopen('php://stdin', 'rb');
+            $line   = fgets($handle);
+            if(trim($line) !== null) {
+                    pinarax_start('3', trim($line));
+            } else {
+                    die();
+            }
+            fclose($handle);
+    } else if(trim($prxtypeline) == '4') {
+            echo 'masukkan host:port' . PHP_EOL;
+            $handle = fopen('php://stdin', 'rb');
+            $line   = fgets($handle);
+            if(trim($line) !== null) {
+                    pinarax_start('4', trim($line));
+            } else {
+                    die();
+            }
+            fclose($handle);
+    } else {
+            die();
+    }
+    fclose($prxtype);
+
+}
+    
 function pinarax_start($ptype, $proxy) {
     $exex_http      = pinarax_curl_attr($ptype, $proxy, 'http://ip-api.com/json/');
     $exex_https     = pinarax_curl_attr($ptype, $proxy, 'https://ipwhois.app/json/');
