@@ -49,35 +49,40 @@ if(trim($prxtypeline) == '1') {
 fclose($prxtype);
 
 function pinarax_start($ptype, $proxy) {
-    $exex_http = pinarax_curl_attr($ptype, $proxy, 'http://ip-api.com/json/');
+    $exex_http      = pinarax_curl_attr($ptype, $proxy, 'http://ip-api.com/json/');
+    $exex_https     = pinarax_curl_attr($ptype, $proxy, 'https://ipwhois.app/json/');
+    $exex_rand      = pinarax_curl_attr($ptype, $proxy, 'https://randomuser.me/api/?gender=female&nat=us');
+    $exex_ig_mid    = pinarax_curl_attr($ptype, $proxy, 'https://www.instagram.com/data/shared_data/');
+    $exex_ig_api    = pinarax_curl_attr($ptype, $proxy, 'https://i.instagram.com/data/manifest.json');
+
     if($exex_http !== false  && strpos($exex_http, 'query') !== false) {
         echo "\033[1;37mHTTP : \033[1;32m✔\033[1;37m\n";
-        $exex_https = pinarax_curl_attr($ptype, $proxy, 'https://ipwhois.app/json/');
-        if($exex_https !== false  && strpos($exex_https, 'ip') !== false) {
-            echo "\033[1;37mHTTPS : \033[1;32m✔\033[1;37m\n";
-            $exex_rand = pinarax_curl_attr($ptype, $proxy, 'https://randomuser.me/api/?gender=female&nat=us');
-            if($exex_rand !== false  && strpos($exex_rand, 'results') !== false) {
-                echo "\033[1;37mRandomuser : \033[1;32m✔\033[1;37m\n";
-                $exex_ig_mid = pinarax_curl_attr($ptype, $proxy, 'https://www.instagram.com/data/shared_data/');
-                if($exex_ig_mid !== false  && strpos($exex_ig_mid, 'csrf_token') !== false) {
-                    echo "\033[1;37mIG mid : \033[1;32m✔\033[1;37m\n";
-                    $exex_ig_api = pinarax_curl_attr($ptype, $proxy, 'https://i.instagram.com/data/manifest.json');
-                    if($exex_ig_api !== false  && strpos($exex_ig_api, 'Instagram') !== false) {
-                        echo "\033[1;37mIG api : \033[1;32m✔\033[1;37m\n";
-                    } else {
-                        echo "\033[1;37mIG api : \033[1;33m✘\033[1;37m\n";
-                    }
-                } else {
-                    echo "\033[1;37mIG mid : \033[1;33m✘\033[1;37m\n";
-                }
-            } else {
-                echo "\033[1;37mRandomuser : \033[1;33m✘\033[1;37m\n";
-            }
-        } else {
-            echo "\033[1;37mHTTPS : \033[1;33m✘\033[1;37m\n";
-        }
     } else {
         echo "\033[1;37mHTTP : \033[1;33m✘\033[1;37m\n";
+    }
+
+    if($exex_https !== false  && strpos($exex_https, 'ip') !== false) {
+        echo "\033[1;37mHTTPS : \033[1;32m✔\033[1;37m\n";
+    } else {
+        echo "\033[1;37mHTTPS : \033[1;33m✘\033[1;37m\n";
+    }
+
+    if($exex_rand !== false  && strpos($exex_rand, 'results') !== false) {
+        echo "\033[1;37mRandomuser : \033[1;32m✔\033[1;37m\n";
+    } else {
+        echo "\033[1;37mRandomuser : \033[1;33m✘\033[1;37m\n";
+    }
+
+    if($exex_ig_mid !== false  && strpos($exex_ig_mid, 'csrf_token') !== false) {
+        echo "\033[1;37mIG mid : \033[1;32m✔\033[1;37m\n";
+    } else {
+        echo "\033[1;37mIG mid : \033[1;33m✘\033[1;37m\n";
+    }
+
+    if($exex_ig_api !== false  && strpos($exex_ig_api, 'Instagram') !== false) {
+        echo "\033[1;37mIG api : \033[1;32m✔\033[1;37m\n";
+    } else {
+        echo "\033[1;37mIG api : \033[1;33m✘\033[1;37m\n";
     }
 }
 
